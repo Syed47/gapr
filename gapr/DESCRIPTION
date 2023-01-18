@@ -1,0 +1,23 @@
+Package: gapr
+Type: Package
+Title: Profile and Display desired output of Gapminder data
+Version: 0.1.0
+Author: Authors@R: c(person("Michael", "Doherty", email="michael.doherty.2019@mumail.ie",
+                      role=c("aut", "cre"),
+  person("Syed", "Baryalay", email="syed.baryalay.2020@mumail.ie", role="aut"),
+  person("James", "Kenehan", email="james.kenehan.2020@mumail.ie", role="aut")
+Description: This package permits subsetting through summarizing, plotting and 
+        fitting models to the gapminder dataset.
+License: GPL 3.0
+Encoding: UTF-8
+LazyData: true
+Depends: R (>= 4.1.0)
+Imports: tidyverse
+URL: https://github.com/Syed47/gapr.git
+RoxygenNote: 7.2.0
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+VignetteBuilder: knitr
