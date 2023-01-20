@@ -5,7 +5,7 @@
 #' \code{summarize_gapr} function filters data from the \code{gapminder} dataset based on the condition,
 #' groups it on some variable and returns the summary of all numeric variables.
 #'
-#' @param obj A object of class \code{}
+#' @param obj A object of class \code{gapr}
 #' @param filter_var A data variable from \code{obj} on which the data should be filtered
 #' @param filter_value A value that can be used for comparison when filtering data
 #' @param group_var A data variable from \code{obj} on which we want to group the

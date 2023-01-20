@@ -1,6 +1,6 @@
 Package: gapr
 Type: Package
-Title: Profile and Display desired output of Gapminder data
+Title: A package to analyse and fit models to the gapminder dataset
 Version: 0.1.0
 Authors@R: c(person("Michael", "Doherty", email="michael.doherty.2019@mumail.ie",
                       role=c("aut", "cre")),

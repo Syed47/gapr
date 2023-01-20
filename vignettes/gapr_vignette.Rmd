@@ -28,7 +28,7 @@ Five functions are supplied:
 
   1. `load_gapr()` : for loading in the data in a particular format,
   
-  2. `summary()` : for summarizing the gapminder data,
+  2. `summarize_gapr()` : for summarizing the gapminder data,
   
   3. `fit()` method: for fitting regression models to the output,
   
@@ -72,17 +72,21 @@ Ireland <- load_gapr("country", "Ireland")
 Ireland$data
 ``` 
 
-## `summary()`
+## `summarize_gapr()`
 
 This function summarizes subsets of the gapminder dataset. The supplied data can be 
 subsetted by a chosen variable to filter by, with options of greater/less than or
 equal given a supplied numerical threshold, which will return mean
 values for life expectancy, GDP and population entries. In the example below,
-all countries with a minimum population equal or greater than ten million are 
-grouped by year.
+all countries with a lifeExp less than 50 year are grouped and returned.
 
 ```{r}
 dat <- load_gapr()
+# !!!
+# this function somehow works when this block is executed but shows error 
+# "not exported by gapr", when knitting, even thought in the NAMESPACE file 
+# it can be seen that it is exported.
+# It' weird that it works sometime but not always
 summarize_gapr(dat, lifeExp, 50, country, filter_func = (`<`))
 ``` 
 
@@ -107,7 +111,7 @@ parameters, respectively.
 
 In the case of the random effects model, it varies slightly:
 \begin{align*}
-y_i &= \beta_0 + \beta_1 x_1 + \b1 z_1 + \b2 z_2  + \epsilon_i\\
+y_i &= \beta_0 + \beta_1 x_1 + \b_1 z_1 + \b_2 z_2  + \epsilon_i\\
 \epsilon_i & \sim \mbox{N}\left(0, \sigma^2\right)
 \end{align*}
 
