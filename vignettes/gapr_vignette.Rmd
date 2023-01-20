@@ -83,8 +83,8 @@ all countries with a lifeExp less than 50 year are grouped and returned.
 ```{r}
 dat <- load_gapr()
 # !!!
-# this function somehow works when this block is executed but shows error 
-# "not exported by gapr", when knitting, even thought in the NAMESPACE file 
+# this function somehow works when only this block is executed but shows error 
+# "not exported by gapr", when knitting, even though in the NAMESPACE file 
 # it can be seen that it is exported.
 # It' weird that it works sometime but not always
 summarize_gapr(dat, lifeExp, 50, country, filter_func = (`<`))
