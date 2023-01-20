@@ -83,7 +83,7 @@ grouped by year.
 
 ```{r}
 dat <- load_gapr()
-gapr::summary(dat, lifeExp, 50, country, filter_func = (`<`))
+summarize_gapr(dat, lifeExp, 50, country, filter_func = (`<`))
 ``` 
 
 ## `fit.gapr()`
