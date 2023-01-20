@@ -135,7 +135,7 @@ plot(dat,country,c("China","Ireland"))
 ```
 
 
-This function is specifically used to plot the output the fitted model. Taking `lmmod` from above, a plot can be created by typing `plot(lmmod)`.
+This function can also be used to plot the output the fitted model. Taking `lmmod` from above, a plot can be created by typing `plot(lmmod)`.
 This outputs a `ggplot` of Life Expectancy against year with a regression line of the model.
 
 
