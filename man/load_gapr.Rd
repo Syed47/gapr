@@ -22,7 +22,7 @@ from year 1952 to 2007
 Loads in gapminder dataset from Github.
 }
 \note{
-A dedicated \code{\link{fit}} and \code{\link{plot}} functions are
+A dedicated \code{\link{fit}} and \code{\link{plot_gapr}} functions are
 provided for objects of class \code{"gapr"}.
 }
 \examples{
@@ -32,7 +32,7 @@ dat <- load_gapr("year")
 
 }
 \seealso{
-\code{\link{fit}}, \code{\link{plot.gapr}}, \code{\link{plot.gapr_fit}}
+\code{\link{fit}}, \code{\link{plot_gapr}}
 }
 \author{
 Syed Baryalay - <\email{syed.baryalay.2020@mumail.ie"}>

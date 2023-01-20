@@ -19,7 +19,7 @@ as well as the data set and the kind of \code{effects} used.
 Fits linear regression models with fixed and random effects to the gapminder data.
 }
 \note{
-A dedicated \code{\link{plot.gapr_fit}} method is provided
+A dedicated \code{fit.gapr} method is provided
 for objects of class \code{"gapr_fit"}
 .
 }
@@ -31,7 +31,7 @@ plot(mod1)
 plot(mod2)
 }
 \seealso{
-\code{\link{load_gapr}}, \code{\link{plot.gapr_fit}}
+\code{\link{load_gapr}}
 }
 \author{
 Michael Doherty - <\email{michael.doherty.2019@mumail.ie}>

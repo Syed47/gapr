@@ -24,6 +24,11 @@
 #' dat <- load_gapr("continent", "Asia")
 #' summary(dat, year, 1980, continent, filter_func = (`>=`));
 #' #' @export
+summary <- function(obj, filter_var, filter_value, group_var,
+                         filter_func = (`==`),
+                         summary_func = list(mean=mean)) {
+  UseMethod("summary")
+}
 summary.gapr <- function(obj, filter_var, filter_value, group_var,
                           filter_func = (`==`),
                           summary_func = list(mean=mean)) {

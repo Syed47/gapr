@@ -6,10 +6,10 @@
 #' @return An object of class \code{"gapr_fit"} which includes the model details
 #' as well as the data set and the kind of \code{effects} used.
 #'
-#' @note A dedicated \code{\link{plot.gapr_fit}} method is provided
+#' @note A dedicated \code{fit.gapr} method is provided
 #' for objects of class \code{"gapr_fit"}
 #' .
-#' @seealso \code{\link{load_gapr}}, \code{\link{plot.gapr_fit}}
+#' @seealso \code{\link{load_gapr}}
 #'
 #' @importFrom stats "lm" "glm"
 #' @author Michael Doherty - <\email{michael.doherty.2019@@mumail.ie}>

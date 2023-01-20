@@ -9,13 +9,13 @@
 #' @importFrom dplyr "filter" "group_by" "select" "summarize"
 #' @importFrom stats "fitted" "median"
 #' @importFrom utils "read.csv"
-#' @note A dedicated \code{\link{fit}} and \code{\link{plot}} functions are
+#' @note A dedicated \code{\link{fit}} and \code{\link{plot_gapr}} functions are
 #' provided for objects of class \code{"gapr"}.
 #'
 #' @export
 #' @author Syed Baryalay - <\email{syed.baryalay.2020@@mumail.ie"}>
 #'
-#' @seealso \code{\link{fit}}, \code{\link{plot.gapr}}, \code{\link{plot.gapr_fit}}
+#' @seealso \code{\link{fit}}, \code{\link{plot_gapr}}
 #' @examples
 #' dat <- load_gapr("country", "Ireland")
 #' dat <- load_gapr("continent", "Europe")
@@ -29,7 +29,7 @@ load_gapr <- function(summarize=c("none", "year", "country", "continent"),
   dataset <- read.csv("https://raw.githubusercontent.com/Syed47/dataset/master/gapminder.csv")
 
   gm <- switch(summarize,
-               none = { dataset |> select(-X) },
+               none = { dataset |> dplyr::select(-X) },
                year = {
                  dataset |>
                    dplyr::group_by(year) |>

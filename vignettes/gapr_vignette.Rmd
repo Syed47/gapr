@@ -20,17 +20,21 @@ knitr::opts_chunk$set(
 ## Introduction
 
 _gapr_ is an R package designed to be used to summarize subsets, plot desired outputs
-and fit regression models from the Gapminder dataset, which provides life expectancy,
+and fit regression models to the Gapminder dataset, which provides life expectancy,
 GDP per capita and population of different countries gloabally from 1952 to 2007. 
-Three functions are supplied:
+The focus of this package is on the Life Expectancy (lifeExp).
+
+Five functions are supplied:
 
   1. `load_gapr()` : for loading in the data in a particular format,
   
-  2. `summary()` : for summarizing the data into subsets,
+  2. `summary()` : for summarizing the gapminder data,
   
-  3. `fit()` method: for fititing regression models to the output,
+  3. `fit()` method: for fitting regression models to the output,
   
-  4. `plot()` method: for producing visualisations of desired output or of fitted model.
+  4. `plot()` method: for producing visualizations of desired output or of fitted model.
+  
+  5. `plot_gapr()` for producing visualizations of desired output or of fitted model.
   
 This vignette seeks to illustrate a typical workflow of the functions of the
 `gapr` package.
@@ -48,11 +52,11 @@ devtools::install_github('Syed47/gapr')
 
 Upon completion of this, you can then type:
 
-```{r, eval=FALSE}
+```{r}
 library(gapr)
 ```
 
-Which will load all previosuly shown functions of the _gapr_ package.
+Which will load all previously shown functions of the _gapr_ package.
 
 In the instance of functions of this package break while in process of updates or 
 not working as desired due to bugs or issues, please see the 
@@ -60,24 +64,24 @@ not working as desired due to bugs or issues, please see the
 
 
 ## `load_gapr()`
-This function loads in the gapminder dataset from GitHub. Its two arguments `summarize` and `value` determine the output of the dataset. `summarize` can be given values of "year", "country","continent" with a default value of "none". `value` gives values to condition when filtering the datasets.
+This function loads in the gapminder dataset from GitHub. Its two arguments `summarize` and `value` determine the output of the dataset. `summarize` can be given values of "year", "country","continent" with a default value of "none". `value` gives values to condition when filtering the dataset.
 In the example below, I am summarizing by "country" and giving it a value of "Ireland".
 
-```{r, echo = FALSE}
-data <- load_gapr("country","Ireland")
+```{r}
+dat <- load_gapr("country", "Ireland")
 ``` 
 
 ## `summary()`
 
 This function summarizes subsets of the gapminder dataset. The supplied data can be 
 subsetted by a chosen variable to filter by, with options of greater/less than or
-equal given a supplied numerical threshold, which will return minimum and maximum
+equal given a supplied numerical threshold, which will return mean
 values for life expectancy, GDP and population entries. In the example below,
 all countries with a minimum population equal or greater than ten million are 
 grouped by year.
 
 ```{r}
-summary(gapminder,
+summary(load_gapr(),
           pop, 10000000,
           year, 
           filter_func = (`>=`))
@@ -86,9 +90,9 @@ summary(gapminder,
 ## `fit.gapr()`
 
 This `fit`method for the `fit()` generic will return a model specified by the data  supplied and fit a model according to one of two options, specified by the 
-`type` argument. In the below example, a model is fit to the output of the
+`effects` argument. In the below example, a model is fit to the output of the
 `summary()` function subset of countries of population greater than or equal to
-ten million, with the default `lm` being used if no `type` agrument is specified.
+ten million, with the default `lm` being used if no `effects` argument is specified.
 
 The linear models used are of the form:
 \begin{align*}
@@ -112,34 +116,35 @@ The only alteration is the random effects, represented by $b1_z1$ and $b1_z2$ wh
 the random effect of Pop and GDP respectively.
 
 ```{r}
-lmmod <- fit.gapr(s)
+lmmod <- fit(dat)
 ```
 
 If a random effects model is to be fitted, the below example is run on the same 
 subset as before of countries with populations exceeding ten million.
 
 ```{r}
-randmod <- fit.gapr(s, "mixed")
+randmod <- fit(dat, effects="mixed")
+```
+
+
+## `plot_gapr()`
+
+The `plot_gapr()` method provided will plot the Life Expectancy against year between 1952-2007 of selected countries or continents. Its argument `var` takes in either variable "country" or "continent" with `val` specifying certain values to output. `...` represents optional arguments that can be passed to the plot method.
+This function creates a nice `ggplot` of the requested output. The example below sets `var` as "country" and `val` as both "China", "Ireland" and "Germany". 
+
+```{r}
+dat <- load_gapr()
+plot_gapr(dat, continent, c("Asia", "Europe", "Africa"))
 ```
 
 
 ## `plot()`
 
-The `plot()` method provided will plot the Life Expectancy against year between 1952-2007 of selected countries or continents. Its argument `var` takes in either variable "country" or "continent" with `val` specifying certain values to output. `...` represents optional arguments that can be passed to the plot method.
-This function creates a nice `ggplot` of the requested output. The example below sets `var` as "country" and `val` as both "China" and "Ireland". 
-
-```{r, echo=FALSE}
-library(ggplot2)
-dat <- load_gapr()
-plot(dat,country,c("China","Ireland"))
-```
-
-
-This function can also be used to plot the output the fitted model. Taking `lmmod` from above, a plot can be created by typing `plot(lmmod)`.
+The `plot()` function can also be used to plot the output the fitted model. Taking `lmmod` from above, a plot can be created by typing `plot(lmmod)`.
 This outputs a `ggplot` of Life Expectancy against year with a regression line of the model.
 
 
-```{r, echo=FALSE}
+```{r}
 plot(lmmod)
 ```
 
