@@ -69,6 +69,7 @@ In the example below, I am summarizing by "country" and giving it a value of "Ir
 
 ```{r}
 Ireland <- load_gapr("country", "Ireland")
+Ireland$data
 ``` 
 
 ## `summary()`
@@ -82,7 +83,7 @@ grouped by year.
 
 ```{r}
 dat <- load_gapr()
-summary(dat, lifeExp, 50, country, filter_func = (`<`))
+gapr::summary(dat, lifeExp, 50, country, filter_func = (`<`))
 ``` 
 
 ## `fit.gapr()`
