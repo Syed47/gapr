@@ -1,27 +1,26 @@
-#' Plot gapr fit output
+#' Plot gapr output
 #'
-#' Plot \code{"lifeExp"} over the years, worldwide, by country or by continent.
+#' Plot \code{"lifeExp"} over the years, of N countries or continents
 #'
-#' @param model_fit An object of class \code{"gapr_fit"} outputted from the \code{link{fit}} function.
+#' @param obj An object of class \code{"gapr"} outputted from the \code{\link{load_gapr}} function.
 #'
-#' @return A ggplot plot (invisibly) which plots \code{lifeExp} against \code{year} and a fit (lm, loess, spline)
+#' @return A ggplot plot which plots \code{lifeExp} against \code{year}
 #'
-#' @export
-#' @importFrom ggplot2 "aes" "geom_line" "geom_point" "ggplot" "ggtitle" "theme_classic" "theme" "xlab" "ylab"
+#' @importFrom dplyr "filter" "group_by" "summarise"
+#' @importFrom ggplot2 "aes" "geom_line" "ggplot" "theme_classic"
 #' @author Syed Baryalay - <\email{syed.baryalay.2020@@mumail.ie}>
-#' @seealso \code{\link{fit}}
+#' @seealso \code{\link{load_gapr}}
 #' @examples
-#' dat <- load_climr(type = "SH")
-#' mod1 <- fit(dat)
-#' mod2 <- fit(dat, data_type="monthly", fit_type="smooth.spline")
-#' mod3 <- fit(dat, data_type="quarterly", fit_type="loess")
-#' plot(mod1)
-#' plot(mod2)
-
-plot.gapr_fit <- function(model_fit) {
-  ggplot(model_fit$data, aes(x=year, y=lifeExp))+
-    geom_point() +
-    geom_line(y=fitted(model_fit$model), color="red") +
-    theme_classic() +
-    ggtitle(paste("model:", model_fit$fit_type))
+#' dat <- load_gapr()
+#' plot(dat, continent, c("Asia", "Europe", "Africa"))
+#' plot(dat, country, c("China", "Ireland", "Nigeria"))
+#' @export
+plot.gapr <- function(obj, var=c("country", "continent"), val, ...) {
+  obj$data |>
+    dplyr::filter({{ var }} %in% val) |>
+    dplyr::group_by({{ var }}, year) |>
+    dplyr::summarise(lifeExp = median(lifeExp)) |>
+    ggplot(aes(x=year, y=lifeExp))+
+    geom_line(aes(colour={{var}})) +
+    theme_classic()
 }
