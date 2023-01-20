@@ -29,6 +29,7 @@ summary <- function(obj, filter_var, filter_value, group_var,
                          summary_func = list(mean=mean)) {
   UseMethod("summary")
 }
+#' @export
 summary.gapr <- function(obj, filter_var, filter_value, group_var,
                           filter_func = (`==`),
                           summary_func = list(mean=mean)) {
@@ -37,6 +38,6 @@ summary.gapr <- function(obj, filter_var, filter_value, group_var,
                    dplyr::group_by({{ group_var }}) |>
                    dplyr::select(where(is.numeric) & -year) |>
                    dplyr::summarise_all(.tbl=_, summary_func))
-  class(output) <- c("gapr", "listof")
+  class(output) <- c("gapr_summary", "listof")
   return(output)
 }

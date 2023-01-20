@@ -11,3 +11,5 @@ mod2 <- fit(dat, effects = "mixed")
 plot(mod1)
 plot(mod2)
 
+plot_gapr(dat, country, c("China", "Ireland", "Germany"))
+

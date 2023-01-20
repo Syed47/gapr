@@ -68,7 +68,7 @@ This function loads in the gapminder dataset from GitHub. Its two arguments `sum
 In the example below, I am summarizing by "country" and giving it a value of "Ireland".
 
 ```{r}
-dat <- load_gapr("country", "Ireland")
+Ireland <- load_gapr("country", "Ireland")
 ``` 
 
 ## `summary()`
@@ -81,10 +81,8 @@ all countries with a minimum population equal or greater than ten million are
 grouped by year.
 
 ```{r}
-summary(load_gapr(),
-          pop, 10000000,
-          year, 
-          filter_func = (`>=`))
+dat <- load_gapr()
+summary(dat, lifeExp, 50, country, filter_func = (`<`))
 ``` 
 
 ## `fit.gapr()`
@@ -116,14 +114,14 @@ The only alteration is the random effects, represented by $b1_z1$ and $b1_z2$ wh
 the random effect of Pop and GDP respectively.
 
 ```{r}
-lmmod <- fit(dat)
+lmmod <- fit(Ireland)
 ```
 
 If a random effects model is to be fitted, the below example is run on the same 
 subset as before of countries with populations exceeding ten million.
 
 ```{r}
-randmod <- fit(dat, effects="mixed")
+randmod <- fit(Ireland, effects="mixed")
 ```
 
 
@@ -133,18 +131,17 @@ The `plot_gapr()` method provided will plot the Life Expectancy against year bet
 This function creates a nice `ggplot` of the requested output. The example below sets `var` as "country" and `val` as both "China", "Ireland" and "Germany". 
 
 ```{r}
-dat <- load_gapr()
-plot_gapr(dat, continent, c("Asia", "Europe", "Africa"))
+plot_gapr(load_gapr(), country, c("China", "Ireland", "Germany"))
 ```
 
 
 ## `plot()`
 
-The `plot()` function can also be used to plot the output the fitted model. Taking `lmmod` from above, a plot can be created by typing `plot(lmmod)`.
+The `plot()` function can also be used to plot the output the fitted model. Taking `randmod` from above, a plot can be created by typing `plot(randmod)`.
 This outputs a `ggplot` of Life Expectancy against year with a regression line of the model.
 
 
 ```{r}
-plot(lmmod)
+plot(randmod)
 ```
 
