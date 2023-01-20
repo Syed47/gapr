@@ -1,0 +1,145 @@
+---
+title: "gapr_Vignette"
+author: "Michael Doherty"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{gapr_vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+  )
+```
+
+## Introduction
+
+_gapr_ is an R package designed to be used to summarize subsets, plot desired outputs
+and fit regression models from the Gapminder dataset, which provides life expectancy,
+GDP per capita and population of different countries gloabally from 1952 to 2007. 
+Three functions are supplied:
+
+  1. `load_gapr()` : for loading in the data in a particular format,
+  
+  2. `summary()` : for summarizing the data into subsets,
+  
+  3. `fit()` method: for fititing regression models to the output,
+  
+  4. `plot()` method: for producing visualisations of desired output or of fitted model.
+  
+This vignette seeks to illustrate a typical workflow of the functions of the
+`gapr` package.
+
+### Installation
+
+_gapr_ can be ran on Windows, Mac OS and Linux. Prerequisites required are the
+installtion of [R](https://cran.r-project.org/), additionally [RStudio](https://www.rstudio.com/) is recommended as to provide a cleaner 
+desktop working environment. Once R has been installed, type the command prompt:
+
+```{r, eval=FALSE}
+install.packages('devtools')
+devtools::install_github('Syed47/gapr')
+```
+
+Upon completion of this, you can then type:
+
+```{r, eval=FALSE}
+library(gapr)
+```
+
+Which will load all previosuly shown functions of the _gapr_ package.
+
+In the instance of functions of this package break while in process of updates or 
+not working as desired due to bugs or issues, please see the 
+[GitHub issues page](https://github.com/Syed47/gapr/issues)
+
+
+## `load_gapr()`
+This function loads in the gapminder dataset from GitHub. Its two arguments `summarize` and `value` determine the output of the dataset. `summarize` can be given values of "year", "country","continent" with a default value of "none". `value` gives values to condition when filtering the datasets.
+In the example below, I am summarizing by "country" and giving it a value of "Ireland".
+
+```{r, echo = FALSE}
+data <- load_gapr("country","Ireland")
+``` 
+
+## `summary()`
+
+This function summarizes subsets of the gapminder dataset. The supplied data can be 
+subsetted by a chosen variable to filter by, with options of greater/less than or
+equal given a supplied numerical threshold, which will return minimum and maximum
+values for life expectancy, GDP and population entries. In the example below,
+all countries with a minimum population equal or greater than ten million are 
+grouped by year.
+
+```{r}
+summary(gapminder,
+          pop, 10000000,
+          year, 
+          filter_func = (`>=`))
+``` 
+
+## `fit.gapr()`
+
+This `fit`method for the `fit()` generic will return a model specified by the data  supplied and fit a model according to one of two options, specified by the 
+`type` argument. In the below example, a model is fit to the output of the
+`summary()` function subset of countries of population greater than or equal to
+ten million, with the default `lm` being used if no `type` agrument is specified.
+
+The linear models used are of the form:
+\begin{align*}
+y_i &= \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3  + \epsilon_i\\
+\epsilon_i & \sim \mbox{N}\left(0, \sigma^2\right)
+\end{align*}
+
+Where $y_i$ represents the life Expectancy for each population, 
+$x_1$ represents the population, $x_2$ represents the time in form of year, 
+$x_3$ represents the  GDP value, $\epsilon_i$ is a homoscedastic Gaussian error 
+term, and $\beta_0$, $\beta_1$ represent the overall intercept and slope 
+parameters, respectively.
+
+In the case of the random effects model, it varies slightly:
+\begin{align*}
+y_i &= \beta_0 + \beta_1 x_1 + \b1 z_1 + \b2 z_2  + \epsilon_i\\
+\epsilon_i & \sim \mbox{N}\left(0, \sigma^2\right)
+\end{align*}
+
+The only alteration is the random effects, represented by $b1_z1$ and $b1_z2$ which represents
+the random effect of Pop and GDP respectively.
+
+```{r}
+lmmod <- fit.gapr(s)
+```
+
+If a random effects model is to be fitted, the below example is run on the same 
+subset as before of countries with populations exceeding ten million.
+
+```{r}
+randmod <- fit.gapr(s, "mixed")
+```
+
+
+## `plot()`
+
+The `plot()` method provided will plot the Life Expectancy against year between 1952-2007 of selected countries or continents. Its argument `var` takes in either variable "country" or "continent" with `val` specifying certain values to output. `...` represents optional arguments that can be passed to the plot method.
+This function creates a nice `ggplot` of the requested output. The example below sets `var` as "country" and `val` as both "China" and "Ireland". 
+
+```{r, echo=FALSE}
+library(ggplot2)
+dat <- load_gapr()
+plot(dat,country,c("China","Ireland"))
+```
+
+
+This function is specifically used to plot the output the fitted model. Taking `lmmod` from above, a plot can be created by typing `plot(lmmod)`.
+This outputs a `ggplot` of Life Expectancy against year with a regression line of the model.
+
+
+```{r, echo=FALSE}
+plot(lmmod)
+```
+
