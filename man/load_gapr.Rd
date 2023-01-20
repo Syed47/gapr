@@ -10,7 +10,9 @@ load_gapr(
 )
 }
 \arguments{
-\item{summarize}{Value(s) to look for when filtering the gapminder dataset.}
+\item{summarize}{Variable on which the gapminder dataset will be summarized.}
+
+\item{value}{Value(s) to condition on when filtering the gapminder dataset.}
 }
 \value{
 A data.frame of 6 columns and 1704 observations on different countries

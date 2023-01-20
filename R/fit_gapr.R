@@ -11,7 +11,7 @@
 #' .
 #' @seealso \code{\link{load_gapr}}, \code{\link{plot.gapr_fit}}
 #'
-#' @export
+#' @importFrom stats "lm" "glm"
 #' @author Michael Doherty - <\email{michael.doherty.2019@@mumail.ie}>
 #' @examples
 #' dat <- load_gapr("country", "Ireland")
@@ -19,7 +19,7 @@
 #' mod2 <- fit(dat, effects = "mixed")
 #' plot(mod1)
 #' plot(mod2)
-
+#' @export
 fit <- function(obj, effects=c("fixed", "mixed")) {
   UseMethod("fit")
 }

@@ -2,12 +2,13 @@
 #'
 #' Loads in gapminder dataset from Github.
 #' @param summarize Variable on which the gapminder dataset will be summarized.
-#' @param summarize Value(s) to look for when filtering the gapminder dataset.
+#' @param value Value(s) to condition on when filtering the gapminder dataset.
 #' @return A data.frame of 6 columns and 1704 observations on different countries
 #' from year 1952 to 2007
 #'
-#' @importFrom dplyr "filter" "group_by" "summarise"
-#'
+#' @importFrom dplyr "filter" "group_by" "select" "summarize"
+#' @importFrom stats "fitted" "median"
+#' @importFrom utils "read.csv"
 #' @note A dedicated \code{\link{fit}} and \code{\link{plot}} functions are
 #' provided for objects of class \code{"gapr"}.
 #'
@@ -32,7 +33,7 @@ load_gapr <- function(summarize=c("none", "year", "country", "continent"),
                year = {
                  dataset |>
                    dplyr::group_by(year) |>
-                   dplyr::summarise(lifeExp = median(lifeExp),
+                   dplyr::summarize(lifeExp = median(lifeExp),
                                     pop = median(pop),
                                     gdpPercap = median(gdpPercap))
                 },
@@ -40,7 +41,7 @@ load_gapr <- function(summarize=c("none", "year", "country", "continent"),
                   dataset |>
                     dplyr::filter(country %in% value) |>
                     dplyr::group_by(country, year) |>
-                    dplyr::summarise(lifeExp = median(lifeExp),
+                    dplyr::summarize(lifeExp = median(lifeExp),
                                      pop = median(pop),
                                      gdpPercap = median(gdpPercap))
                 },
@@ -48,7 +49,7 @@ load_gapr <- function(summarize=c("none", "year", "country", "continent"),
                   dataset |>
                     dplyr::filter(continent %in% value) |>
                     dplyr::group_by(continent, year) |>
-                    dplyr::summarise(lifeExp = median(lifeExp),
+                    dplyr::summarize(lifeExp = median(lifeExp),
                                      pop = median(pop),
                                      gdpPercap = median(gdpPercap))
                 })
