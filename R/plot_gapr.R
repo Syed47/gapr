@@ -17,11 +17,11 @@
 #' dat <- load_gapr()
 #' plot(dat, continent, c("Asia", "Europe", "Africa"))
 #' plot(dat, country, c("China", "Ireland", "Nigeria"))
-plot <- function(x, var=continent, val=c("Asia", "Europe"), ...) {
+plot <- function(x, ..., var=continent, val=c("Asia", "Europe")) {
   UseMethod("plot")
 }
 #' @export
-plot.gapr <- function(x, var=continent, val=c("Asia", "Europe"), ...) {
+plot.gapr <- function(x, ..., var=continent, val=c("Asia", "Europe")) {
   x$data |>
     dplyr::filter({{ var }} %in% val) |>
     dplyr::group_by({{ var }}, year) |>

@@ -11,7 +11,7 @@ Description: This package permits subsetting through summarizing, plotting and
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
-Depends: R (>= 4.1.0)
+Depends: R (>= 4.2.0)
 Imports: ggplot2, dplyr
 URL: https://github.com/Syed47/gapr.git
 RoxygenNote: 7.2.3
